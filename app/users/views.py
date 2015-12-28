@@ -1,6 +1,6 @@
 from app import db, bcrypt
 from flask import render_template, redirect, url_for, flash, request, Blueprint
-from flask.ext.login import login_user, login_required, logout_user
+from flask.ext.login import login_user, login_required, logout_user, current_user
 from .forms import LoginForm, RegisterForm
 from app.models import User
 
@@ -13,11 +13,13 @@ users_blueprint = Blueprint(
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        print user is not None and bcrypt.check_password_hash(user.password, form.username.data)
-        if user is not None and bcrypt.check_password_hash(user.password,
-            form.password.data):
-            login_user(user)
+        user = User.query.filter_by(name=form.username.data).first()
+        if user is not None and bcrypt.check_password_hash(
+            user.password, form.password.data):
+            if form.remember_me.data:
+                login_user(user, remember=True)
+            else:
+                login_user(user)
             flash('Login success!')
             return redirect(url_for('home.index'))
         else:
@@ -43,6 +45,6 @@ def register():
         return redirect(url_for('home.index'))
     return render_template('register.html', form=form)
 
-@users_blueprint.route('/user/<username>')
-def profile(username):
-    return render_template('profile.html', username=username)
+@users_blueprint.route('/user/<name>')
+def profile(name):
+    return render_template('profile.html', current_user=current_user)

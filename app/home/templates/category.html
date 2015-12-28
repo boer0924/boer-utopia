@@ -5,29 +5,16 @@
     {% for post in posts %}
     <ul class="uk-list uk-list-striped">
         <li>
-            <a href="{{ url_for('home.article', article_id=post.id) }}">{{ post.title }}</a>
-            <!-- <i class="uk-icon-tags"></i>Tags:{{ post.category }}&nbsp;&nbsp;&nbsp;&nbsp; -->
-            {% if session['username'] %}
-            <i class="uk-icon-user"></i> {{ session['username'] }}&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{{ url_for('home.article', article_id=post.id) }}" class="uk-text-bold">{{ post.title }}</a>
+            {% if current_user.name %}
+            <i class="uk-icon-user"></i> {{ current_user.name }}&nbsp;&nbsp;
+            <i class="uk-icon-calendar"></i> {{ post.pub_date }}&nbsp;&nbsp;
             {% else %}
             <i class="uk-icon-user"></i> Awesome Boer&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="uk-icon-calendar"></i> {{ post.pub_date }}&nbsp;&nbsp;
             {% endif %}
         </li>
     </ul>
-<!--     <article class="uk-article">
-        <h1 class="uk-article-title">{{ post.title }}</h1>
-        <p class="uk-article-lead" ><i class="uk-icon-spinner uk-icon-spin"></i>{{ post.body[:256] }}</p>
-        <p><a href="{{ url_for('home.article', article_id=post.id) }}">继续阅读<i class="uk-icon-angle-double-right"></i></a></p>
-        <h6>
-            <i class="uk-icon-tags"></i>Tags:{{ post.category }}&nbsp;&nbsp;&nbsp;&nbsp;
-            {% if session['username'] %}
-            <i class="uk-icon-user"></i> {{ session['username'] }}&nbsp;&nbsp;&nbsp;&nbsp;
-            {% else %}
-            <i class="uk-icon-user"></i> Awesome Boer&nbsp;&nbsp;&nbsp;&nbsp;
-            {% endif %}
-        </h6>
-        <hr class="uk-article-divider">
-    </article> -->
     {% endfor %}
     <!-- end article list  -->
 </div>

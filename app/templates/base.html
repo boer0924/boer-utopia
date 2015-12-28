@@ -27,8 +27,8 @@
                 </ul>
                 <div class="uk-navbar-flip">
                     <ul class="uk-navbar-nav uk-hidden-small">
-                        {% if session['username'] %}
-                        <!-- <li><a href="{{ url_for('profile', username=session['username']) }}"><i class="uk-icon-user"></i>  {{ session['username'] }}</a></li> -->
+                        {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('users.profile', name=current_user.name) }}"><i class="uk-icon-user"></i>  {{ current_user.name }}</a></li>
                         <li><a href="{{ url_for('home.publish') }}"><i class="uk-icon-edit"></i> Publish</a></li>
                         <li><a href="{{ url_for('users.logout') }}"><i class="uk-icon-sign-out"></i> Logout</a></li>
                         {% else %}

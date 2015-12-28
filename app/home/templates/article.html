@@ -12,16 +12,20 @@
     {% for post in posts %}
     <article class="uk-article">
         <h1 class="uk-article-title">{{ post.title }}</h1>
-        <p class="uk-article-lead" ></p>
-        {{ post.body|safe }}
-        <h6>
-            {% if session['username'] %}
-            <i class="uk-icon-user"></i> {{ session['username'] }}&nbsp;&nbsp;&nbsp;&nbsp;
-            <a style="color: #444;" href="{{ url_for('home.article_del', article_id=post.id) }}" class="uk-animation-hover uk-animation-shake"><i class="uk-icon-trash"></i> Delete</a>
+        <p class="uk-article-meta">
+            {% if current_user.name %}
+            <i class="uk-icon-user"></i> {{ current_user.name }}&nbsp;&nbsp;
+            <i class="uk-icon-calendar"></i> {{ post.pub_date }}&nbsp;&nbsp;
+            <a style="color: #999;" href="{{ url_for('home.article_del', article_id=post.id) }}" class="uk-animation-hover uk-animation-shake"><i class="uk-icon-trash"></i> Delete</a>
             {% else %}
-            <i class="uk-icon-user"></i> Admin&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="uk-icon-user"></i> Admin&nbsp;&nbsp;
+            {{ post.pub_date }}
             {% endif %}
-        </h6>
+            
+        </p>
+        <p class="uk-article-lead" ></p>
+        {{ post.content|safe }}
+        <hr class="uk-article-divider">
         <wb:share-button addition="simple" type="button" ralateUid="2770931324"></wb:share-button>
     </article>
     <!-- 多说评论框 start -->

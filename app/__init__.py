@@ -2,10 +2,12 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.bcrypt import Bcrypt
-import os
 
 app = Flask(__name__)
+
+import os
 app.config.from_object(os.environ['APP_SETTINGS'])
+
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)

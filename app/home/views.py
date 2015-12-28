@@ -12,13 +12,10 @@ home_blueprint = Blueprint(
 
 @home_blueprint.route('/')
 @home_blueprint.route('/index/<int:page>')
-@login_required
+# @login_required
 def index(page=1):
-    # u = User.query.filter_by(username=session['username']).first()
-    # posts = Post.query.filter_by(user_id=u.id).paginate(
-        # page, app.config['POSTS_PER_PAGE'], False)
     posts = Blog.query.paginate(page, app.config['POSTS_PER_PAGE'], False)
-    return render_template('index.html', posts=posts)
+    return render_template('index.html', posts=posts, current_user=current_user)
 
 @home_blueprint.route('/article/<article_id>')
 def article(article_id):
@@ -50,18 +47,18 @@ def publish():
     ]
     if form.validate_on_submit():
         current_category = Category.query.filter_by(
-            name=str(form.category.data)).first()
+            name=form.category.data).first()
         format_content = markdown(request.form['content'],
             ['markdown.extensions.extra'])
         if current_category:
             post = Blog(form.title.data, format_content,
-                current_user.id, current_category)
+                current_user.id, current_category.id)
         else:
-            current_category = Category(str(form.category.data))
+            current_category = Category(form.category.data)
             db.session.add(current_category)
             db.session.commit()
             post = Blog(form.title.data, format_content,
-                current_user.id, update_category)
+                current_user.id, current_category.id)
         db.session.add(post)
         db.session.commit()
         flash('Publish blog success!')
