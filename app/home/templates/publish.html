@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block head %}
+        <link href="//cdn.bootcss.com/codemirror/5.9.0/codemirror.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/uikit/2.24.2/css/components/htmleditor.almost-flat.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/uikit/2.24.2/css/components/htmleditor.gradient.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/uikit/2.24.2/css/components/htmleditor.min.css" rel="stylesheet">
+        <script src="//cdn.bootcss.com/marked/0.3.5/marked.min.js"></script>
+        <script src="//cdn.bootcss.com/codemirror/5.9.0/codemirror.min.js"></script>
+        <script src="//cdn.bootcss.com/codemirror/5.9.0/mode/markdown/markdown.min.js"></script>
+        <script src="//cdn.bootcss.com/codemirror/5.9.0/addon/mode/overlay.min.js"></script>
+        <script src="//cdn.bootcss.com/codemirror/5.9.0/mode/xml/xml.min.js"></script>
+        <script src="//cdn.bootcss.com/codemirror/5.9.0/mode/gfm/gfm.min.js"></script>
+        <script src="//cdn.bootcss.com/uikit/2.24.2/js/components/htmleditor.min.js"></script>
+{% endblock %}
+{% block content %}
+<!-- start comment -->
+<form action="" method="post" name="post" style="padding: 25px;" class="uk-form uk-form-stacked">
+    {{ form.hidden_tag() }}
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">Title</label>
+        <div class="uk-form-controls">
+            {{ form.title(style="width: 910px;") }}
+        </div>
+    </div>
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">Content</label>
+        <div class="uk-form-controls">
+            <!-- {{ form.content(style="width: 910px; height: 610px;") }} -->
+            <textarea name="content" data-uk-htmleditor="{markdown:true, mode:'tab', maxsplitsize:600}"></textarea>
+        </div>
+    </div>
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="">Category</label>
+        <div class="uk-form-controls">
+            {{ form.category }}
+        </div>
+    </div>
+    <div class="uk-form-row">
+        <div class="uk-form-controls">
+            <!-- <input type="submit" value="Share it" class="uk-button"> -->
+            <button type="submit" class="uk-button uk-button-primary">Submit</button>
+        </div>
+    </div>
+    <!-- {% for error in form.errors %}
+    <script type="text/javascript">
+        UIkit.notify({
+            message : '{{ error }}',
+            status : 'danger',
+            timeout : 5000,
+            pos : 'top-center'
+        });
+    </script>
+    {% endfor %} -->
+</form>
+<!-- end comment -->
+{% endblock %}

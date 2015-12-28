@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="margin-top: 40px; margin-bottom: 50px;" class="uk-width-medium-1-2 uk-container-center">
+    <form action="" method="post" name="register" class="uk-form uk-form-stacked">
+        {{ form.hidden_tag() }}
+        <legend>Sign Up</legend>
+        <div class="uk-form-row">
+            <label class="uk-form-label" for="">Username</label>
+            <div class="uk-form-controls">{{ form.username }}</div>
+        </div>
+        <div class="uk-form-row">
+            <label class="uk-form-label" for="">E-Mail</label>
+            <div class="uk-form-controls">{{ form.email }}</div>
+        </div>
+        <div class="uk-form-row">
+            <label class="uk-form-label" for="">Password</label>
+            <div class="uk-form-controls">{{ form.password }}</div>
+        </div>
+        <div class="uk-form-row">
+            <label class="uk-form-label" for="">Confirm</label>
+            <div class="uk-form-controls">{{ form.confirm }}</div>
+        </div>
+        <div class="uk-form-row">
+            <input type="submit" value="Sign Up" class="uk-button">
+        </div>
+        {% for error in form.errors %}
+        <script type="text/javascript">
+            UIkit.notify({
+                message : '{{ error }}',
+                status  : 'danger',
+                timeout : 5000,
+                pos     : 'top-center'
+            });
+        </script>
+        {% endfor %}
+    </form>
+</div>
+{% endblock %}

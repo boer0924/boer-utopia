@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>Hello Flask</title>
+        {% endif %}
+        <link href="//cdn.bootcss.com/uikit/2.24.2/css/uikit.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/uikit/2.24.2/css/components/notify.min.css" rel="stylesheet">
+        <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/uikit/2.24.2/js/uikit.min.js"></script>
+        <script src="//cdn.bootcss.com/uikit/2.24.2/js/components/notify.min.js"></script>
+        <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <!-- start navbar -->
+        <nav class="uk-navbar uk-navbar-attached">
+            <div class="uk-container uk-container-center">
+                <a class="uk-navbar-brand uk-hidden-small" href="{{ url_for('home.index') }}">Boer-Utopia</a>
+                <ul class="uk-navbar-nav uk-hidden-small">
+                    <li><a href="{{ url_for('home.index') }}"><i class="uk-icon-home"></i> Home</a></li>
+                    <li><a href="{{ url_for('home.category', category_name='linux') }}"><i class="uk-icon-linux"></i> Linux</a></li>
+                    <li><a href="{{ url_for('home.category', category_name='python') }}"><i class="uk-icon-code"></i> Python</a></li>
+                    <li><a href="{{ url_for('home.category', category_name='devops') }}"><i class="uk-icon-wrench"></i> DevOps</a></li>
+                </ul>
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav uk-hidden-small">
+                        {% if session['username'] %}
+                        <!-- <li><a href="{{ url_for('profile', username=session['username']) }}"><i class="uk-icon-user"></i>  {{ session['username'] }}</a></li> -->
+                        <li><a href="{{ url_for('home.publish') }}"><i class="uk-icon-edit"></i> Publish</a></li>
+                        <li><a href="{{ url_for('users.logout') }}"><i class="uk-icon-sign-out"></i> Logout</a></li>
+                        {% else %}
+                        <li><a href="{{ url_for('users.login') }}"><i class="uk-icon-sign-in"></i> Login</a></li>
+                        <li><a href="{{ url_for('users.register') }}"><i class="uk-icon-registered"></i> Register</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- end navbar -->
+        <!-- start middle -->
+        <div class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="uk-alert" data-uk-alert>
+                <a href="" class="uk-alert-close uk-close"></a>
+                <p>{{ message }}</p>
+            </div>
+            {% endfor %}
+            {%endif%}
+            {% endwith %}
+            <div class="uk-grid">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        <!-- end middle -->
+        <!-- start footer -->
+        <div class="uk-margin-large-top" style="background-color:#eee; border-top:1px solid #ccc;">
+            <div class="uk-container uk-container-center uk-text-center">
+                <div class="uk-panel uk-margin-top uk-margin-bottom">
+                    <p>
+                        <a target="_blank" href="http://weibo.com/boerutopia" class="uk-icon-button uk-icon-weibo"></a>
+                        <a target="_blank" href="https://github.com/boer0924" class="uk-icon-button uk-icon-github"></a>
+                    </p>
+                    <p>Powered by <a href="http://flask.pocoo.org">Flask</a>. Copyright &copy; 2015.</p>
+                    <p><a href="http://www.boer.xyz/" target="_blank">www.boer.xyz</a>. All rights reserved.</p>
+                    <a target="_blank" href="http://www.w3.org/TR/html5/"><i class="uk-icon-html5" style="font-size:64px; color: #444;"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- end footer -->
+    </body>
+</html>

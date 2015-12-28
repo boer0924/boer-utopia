@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link href="//cdn.bootcss.com/highlight.js/9.0.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/highlight.js/9.0.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
+
+{% block content %}
+<div class="uk-width-7-10">
+    <!-- start article list  -->
+    {% for post in posts %}
+    <article class="uk-article">
+        <h1 class="uk-article-title">{{ post.title }}</h1>
+        <p class="uk-article-lead" ></p>
+        {{ post.body|safe }}
+        <h6>
+            {% if session['username'] %}
+            <i class="uk-icon-user"></i> {{ session['username'] }}&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="color: #444;" href="{{ url_for('home.article_del', article_id=post.id) }}" class="uk-animation-hover uk-animation-shake"><i class="uk-icon-trash"></i> Delete</a>
+            {% else %}
+            <i class="uk-icon-user"></i> Admin&nbsp;&nbsp;&nbsp;&nbsp;
+            {% endif %}
+        </h6>
+        <wb:share-button addition="simple" type="button" ralateUid="2770931324"></wb:share-button>
+    </article>
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="{{ post.id }}" data-title="{{ post.title }}" data-url="{{ url_for('home.article', article_id=post.id) }}"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"boer"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+    {% endfor %}
+    <!-- end article list  -->
+</div>
+
+<div class="uk-width-3-10">
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">Follow Me</h3>
+        <p>
+            <a href="http://weibo.com/boerutopia" class="uk-icon-button uk-icon-weibo"></a>
+            <a href="#" class="uk-icon-button uk-icon-github"></a>
+            <a href="#" class="uk-icon-button uk-icon-twitter"></a>
+            <a href="#" class="uk-icon-button uk-icon-dribbble"></a>
+            <a href="#" class="uk-icon-button uk-icon-html5"></a>
+        </p>
+    </div>
+    <hr class="uk-article-divider">
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=1&uid=2770931324&verifier=6810783f&dpc=1"></iframe>
+</div>
+{% endblock %}

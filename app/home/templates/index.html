@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="uk-width-7-10">
+    <!-- start article list  -->
+    {% for post in posts.items %}
+    <ul class="uk-list uk-list-striped">
+        <li>
+            <a href="{{ url_for('home.article', article_id=post.id) }}" class="uk-text-bold">{{ post.title }}</a>
+            {% if session['username'] %}
+            <i class="uk-icon-user"></i> {{ session['username'] }}&nbsp;&nbsp;&nbsp;&nbsp;
+            {% else %}
+            <i class="uk-icon-user"></i> Awesome Boer&nbsp;&nbsp;&nbsp;&nbsp;
+            {% endif %}
+        </li>
+    </ul>
+<!--     <article class="uk-article">
+        <h1 class="uk-article-title">{{ post.title }}</h1>
+        <p class="uk-article-lead" >{{ post.body[:256] }}</p>
+        <p><a href="{{ url_for('home.article', article_id=post.id) }}">继续阅读<i class="uk-icon-angle-double-right"></i></a></p>
+        <h6>
+            <i class="uk-icon-tags"></i>Tags:{{ post.category }}&nbsp;&nbsp;&nbsp;&nbsp;
+            {% if session['username'] %}
+            <i class="uk-icon-user"></i> {{ session['username'] }}&nbsp;&nbsp;&nbsp;&nbsp;
+            {% else %}
+            <i class="uk-icon-user"></i> Awesome Boer&nbsp;&nbsp;&nbsp;&nbsp;
+            {% endif %}
+        </h6>
+        <p class="uk-article-meta"><i class="uk-icon-user"></i> {{ session['username'] }}</p>
+        <hr class="uk-article-divider">
+    </article> -->
+    {% endfor %}
+    <!-- end article list  -->
+    <!-- start paginate -->
+    <ul class="uk-pagination">
+        {% if posts.has_prev %}
+        <li class="uk-disabled"><a href="{{ url_for('home.index', page=posts.prev_num) }}"><span><i class="uk-icon-angle-double-left"></i></span></a></li>
+        {% endif %}
+        {% for p in posts.iter_pages() %}
+            {% if p == posts.page %}
+                <li class="uk-active"><span><a href="{{ url_for('home.index', page=p) }}">{{ p }}</a></span></li>
+            {% elif not p %}
+                <li><span>...</span></li>
+            {% else %}
+                <li class="uk-disabled"><span><a href="{{ url_for('home.index', page=p) }}">{{ p }}</a></span></li>
+            {% endif %}
+        {% endfor %}
+        {% if posts.has_next %}
+        <li class="uk-disabled"><a href="{{ url_for('home.index', page=posts.next_num) }}"><span><i class="uk-icon-angle-double-right"></i></span></a></li>
+        {% endif %}
+    </ul>
+    <!-- end paginate -->
+</div>
+
+<div class="uk-width-3-10">
+    <wb:follow-button uid="2770931324" type="red_4" width="100%" height="64" ></wb:follow-button>
+    <hr class="uk-article-divider">
+    <div class="uk-panel uk-panel-header">
+        <h3 class="uk-panel-title">Contact Details</h3>
+        <p>
+            <strong>Company Name</strong>
+            <br>China, Chongqing
+            <br>CMCC IOT
+        </p>
+        <p>
+            <a>boer0924@sina.com</a>
+            <br><a>@Telephone</a><br>
+            13527335199
+        </p>
+        <h3 class="uk-h4">Follow Me</h3>
+        <p>
+            <a href="http://weibo.com/boerutopia" class="uk-icon-button uk-icon-weibo"></a>
+            <a href="#" class="uk-icon-button uk-icon-github"></a>
+            <a href="#" class="uk-icon-button uk-icon-twitter"></a>
+            <a href="#" class="uk-icon-button uk-icon-dribbble"></a>
+            <a href="#" class="uk-icon-button uk-icon-html5"></a>
+        </p>
+    </div>
+</div>
+{% endblock %}
