@@ -15,7 +15,7 @@
 {% block content %}
 <!-- start comment -->
 <form action="" method="post" name="post" style="padding: 25px;" class="uk-form uk-form-stacked">
-    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
     <div class="uk-form-row">
         <label class="uk-form-label" for="">Title</label>
         <div class="uk-form-controls">

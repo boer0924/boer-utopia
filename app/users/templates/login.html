@@ -3,7 +3,7 @@
 {% block content %}
 <div style="margin-top: 180px; margin-bottom: 185px;" class="uk-width-medium-1-2 uk-container-center">
     <form action="" method="post" name="login" class="uk-form">
-        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
         <fieldset data-uk-margin>
             <legend>Sign In</legend>
             {{ form.username }}
@@ -29,7 +29,7 @@
             </script>
             {% endfor %}
             <input type="submit" value="Sign In" class="uk-button">
-            {{ form.remember_me }}<i>记住我</i>
+            {{ form.remember }}<i>记住我</i>
         </fieldset>
     </form>
 </div>

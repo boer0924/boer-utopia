@@ -53,7 +53,7 @@ class User(db.Model):
         return unicode(self.id)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.name
 
 class Category(db.Model):
 

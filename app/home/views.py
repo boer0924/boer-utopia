@@ -12,10 +12,10 @@ home_blueprint = Blueprint(
 
 @home_blueprint.route('/')
 @home_blueprint.route('/index/<int:page>')
-# @login_required
 def index(page=1):
     posts = Blog.query.paginate(page, app.config['POSTS_PER_PAGE'], False)
-    return render_template('index.html', posts=posts, current_user=current_user)
+    hot_posts = Blog.query.order_by('pub_date desc').limit(app.config['HOT_POSTS_COUNT']).all()
+    return render_template('index.html', posts=posts, hot_posts=hot_posts)
 
 @home_blueprint.route('/article/<article_id>')
 def article(article_id):

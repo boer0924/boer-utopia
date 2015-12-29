@@ -18,8 +18,8 @@
         <!-- start navbar -->
         <nav class="uk-navbar uk-navbar-attached">
             <div class="uk-container uk-container-center">
-                <a class="uk-navbar-brand uk-hidden-small" href="{{ url_for('home.index') }}">Boer-Utopia</a>
-                <ul class="uk-navbar-nav uk-hidden-small">
+                <a class="uk-navbar-brand" href="{{ url_for('home.index') }}">Boer-Utopia</a>
+                <ul class="uk-navbar-nav">
                     <li><a href="{{ url_for('home.index') }}"><i class="uk-icon-home"></i> Home</a></li>
                     <li><a href="{{ url_for('home.category', category_name='linux') }}"><i class="uk-icon-linux"></i> Linux</a></li>
                     <li><a href="{{ url_for('home.category', category_name='python') }}"><i class="uk-icon-code"></i> Python</a></li>
@@ -60,14 +60,12 @@
         <!-- start footer -->
         <div class="uk-margin-large-top" style="background-color:#eee; border-top:1px solid #ccc;">
             <div class="uk-container uk-container-center uk-text-center">
-                <div class="uk-panel uk-margin-top uk-margin-bottom">
-                    <p>
-                        <a target="_blank" href="http://weibo.com/boerutopia" class="uk-icon-button uk-icon-weibo"></a>
-                        <a target="_blank" href="https://github.com/boer0924" class="uk-icon-button uk-icon-github"></a>
-                    </p>
+                <div class="uk-panel uk-margin-large-top uk-margin-bottom">
                     <p>Powered by <a href="http://flask.pocoo.org">Flask</a>. Copyright &copy; 2015.</p>
                     <p><a href="http://www.boer.xyz/" target="_blank">www.boer.xyz</a>. All rights reserved.</p>
-                    <a target="_blank" href="http://www.w3.org/TR/html5/"><i class="uk-icon-html5" style="font-size:64px; color: #444;"></i></a>
+                    <a href="/">
+                        <img style="width: 50px;" class="uk-border-circle" src="http://tp1.sinaimg.cn/2770931324/180/40007524787/1" alt="">
+                    </a>
                 </div>
             </div>
         </div>

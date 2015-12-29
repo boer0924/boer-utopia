@@ -6,6 +6,7 @@ class BaseConfig(object):
     SECRET_KEY = 'Microblog-Dev'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     POSTS_PER_PAGE = 9
+    HOT_POSTS_COUNT = 3
 
 class TestConfig(BaseConfig):
     DEBUG = True

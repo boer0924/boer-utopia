@@ -16,7 +16,7 @@ def login():
         user = User.query.filter_by(name=form.username.data).first()
         if user is not None and bcrypt.check_password_hash(
             user.password, form.password.data):
-            if form.remember_me.data:
+            if form.remember.data:
                 login_user(user, remember=True)
             else:
                 login_user(user)
@@ -41,6 +41,7 @@ def register():
         user = User(form.username.data, form.email.data, form.password.data)
         db.session.add(user)
         db.session.commit()
+        login_user(user)
         flash('Register success and login!')
         return redirect(url_for('home.index'))
     return render_template('register.html', form=form)
