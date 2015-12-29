@@ -5,7 +5,7 @@ class BaseConfig(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'Microblog-Dev'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    POSTS_PER_PAGE = 9
+    POSTS_PER_PAGE = 3
     HOT_POSTS_COUNT = 3
 
 class TestConfig(BaseConfig):
@@ -23,8 +23,10 @@ class ProductionConfig(BaseConfig):
     POSTS_PER_PAGE = 10
 ## system env
 # export APP_SETTINGS="config.DevelopmentConfig"
+# heroku config:set APP_SETTINGS="config.ProductionConfig" --remote heroku
 # export DATABASE_URL="sqlite:///boer-utopia.db"
 # export DATABASE_URL="postgresql://localhost/boer-utopia"
+# heroku config:set DATABASE_URL=postgres://zhyardeyonnuqu:1lwEnSM_Zo7IH3s4WFH56d-hwm@ec2-23-21-96-129.compute-1.amazonaws.com:5432/d8q03lruh33ml0
 
 ## system package
 # sudo apt-get insall libffi-dev python-dev

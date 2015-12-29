@@ -33,7 +33,6 @@ def article_del(article_id):
 @home_blueprint.route('/category/<category_name>')
 def category(category_name):
     category = Category.query.filter_by(name=category_name).first()
-    print category
     posts = Blog.query.filter_by(category_id=category.id).all()
     return render_template('category.html', posts=posts)
 

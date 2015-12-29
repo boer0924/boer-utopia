@@ -15,15 +15,19 @@
         {% if posts.has_prev %}
         <li class="uk-disabled"><a href="{{ url_for('home.index', page=posts.prev_num) }}"><span><i class="uk-icon-angle-double-left"></i></span></a></li>
         {% endif %}
-        {% for p in posts.iter_pages() %}
-            {% if p == posts.page %}
-                <li class="uk-active"><span><a href="{{ url_for('home.index', page=p) }}">{{ p }}</a></span></li>
-            {% elif not p %}
-                <li><span>...</span></li>
-            {% else %}
-                <li class="uk-disabled"><span><a href="{{ url_for('home.index', page=p) }}">{{ p }}</a></span></li>
-            {% endif %}
-        {% endfor %}
+
+        {% if posts.pages > 1 %}
+            {% for p in posts.iter_pages() %}
+                {% if p == posts.page %}
+                    <li class="uk-active"><span><a href="{{ url_for('home.index', page=p) }}">{{ p }}</a></span></li>
+                {% elif not p %}
+                    <li><span>...</span></li>
+                {% else %}
+                    <li class="uk-disabled"><span><a href="{{ url_for('home.index', page=p) }}">{{ p }}</a></span></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        
         {% if posts.has_next %}
         <li class="uk-disabled"><a href="{{ url_for('home.index', page=posts.next_num) }}"><span><i class="uk-icon-angle-double-right"></i></span></a></li>
         {% endif %}
