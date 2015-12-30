@@ -25,10 +25,11 @@ def article(article_id):
 @home_blueprint.route('/article/<article_id>/delete')
 @login_required
 def article_del(article_id):
-    if current_user == 'boer':
+    if current_user.name == 'boer':
         post = Blog.query.filter_by(id=article_id).first()
         db.session.delete(post)
         db.session.commit()
+        flash('Delete blog success!')
         return redirect(url_for('home.index'))
     else:
         flash('You are not Superuser!')
