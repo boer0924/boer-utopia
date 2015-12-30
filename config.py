@@ -21,6 +21,7 @@ class ProductionConfig(BaseConfig):
     SECRET_KEY = 'C6\x1dO\xc9\xb1\x92Vd\xc4\xc9\xb5\xe18\x97]\x85\xe1\xa9\x100G\x9f\xbf'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     POSTS_PER_PAGE = 10
+    HOT_POSTS_COUNT = 4
 ## system env
 # export APP_SETTINGS="config.DevelopmentConfig"
 # heroku config:set APP_SETTINGS="config.ProductionConfig" --remote heroku
