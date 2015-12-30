@@ -25,10 +25,14 @@ def article(article_id):
 @home_blueprint.route('/article/<article_id>/delete')
 @login_required
 def article_del(article_id):
-    post = Blog.query.filter_by(id=article_id).first()
-    db.session.delete(post)
-    db.session.commit()
-    return redirect(url_for('home.index'))
+    if current_user == 'boer':
+        post = Blog.query.filter_by(id=article_id).first()
+        db.session.delete(post)
+        db.session.commit()
+        return redirect(url_for('home.index'))
+    else:
+        flash('You are not Superuser!')
+        return redirect(url_for('home.index'))
 
 @home_blueprint.route('/category/<category_name>')
 def category(category_name):

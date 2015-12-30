@@ -15,7 +15,9 @@
         <p class="uk-article-meta">
             <i class="uk-icon-user"></i> {{ post.author.name }}&nbsp;&nbsp;
             <i class="uk-icon-calendar"></i> {{ post.pub_date }}&nbsp;&nbsp;
+            {% if current_user == 'boer' %}
             <a style="color: #999;" href="{{ url_for('home.article_del', article_id=post.id) }}" class="uk-animation-hover uk-animation-shake"><i class="uk-icon-trash"></i> Delete</a>
+            {% endif %}
         </p>
         <!-- <p class="uk-article-lead" ></p> -->
         {{ post.content|safe }}

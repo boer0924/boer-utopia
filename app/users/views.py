@@ -23,7 +23,7 @@ def login():
             flash('Login success!')
             return redirect(url_for('home.index'))
         else:
-            flash('Invalid username or password!')
+            flash('Username already exists!')
             return redirect(url_for('users.login'))
     return render_template('login.html', form=form)
 
@@ -38,12 +38,17 @@ def logout():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        user = User(form.username.data, form.email.data, form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        flash('Register success and login!')
-        return redirect(url_for('home.index'))
+        user = User.query.filter_by(name=form.username.data).first()
+        if not user:
+            user = User(form.username.data, form.email.data, form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            flash('Register success and login!')
+            return redirect(url_for('home.index'))
+        else:
+            flash('Username is invalid!')
+            return redirect(url_for('users.register'))
     return render_template('register.html', form=form)
 
 @users_blueprint.route('/user/<name>')

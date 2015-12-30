@@ -29,4 +29,5 @@ class ProductionConfig(BaseConfig):
 # heroku config:set DATABASE_URL=postgres://zhyardeyonnuqu:1lwEnSM_Zo7IH3s4WFH56d-hwm@ec2-23-21-96-129.compute-1.amazonaws.com:5432/d8q03lruh33ml0
 
 ## system package
-# sudo apt-get insall libffi-dev python-dev
+# sudo apt-get install libffi-dev python-dev
+# sudo apt-get install postgresql postgresql-server-dev-9.3
