@@ -23,7 +23,7 @@ def login():
             flash('Login success!')
             return redirect(url_for('home.index'))
         else:
-            flash('Username already exists!')
+            flash('Invalid username or password!')
             return redirect(url_for('users.login'))
     return render_template('login.html', form=form)
 
@@ -47,7 +47,7 @@ def register():
             flash('Register success and login!')
             return redirect(url_for('home.index'))
         else:
-            flash('Username is invalid!')
+            flash('Username already exists!')
             return redirect(url_for('users.register'))
     return render_template('register.html', form=form)
 

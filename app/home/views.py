@@ -1,4 +1,4 @@
-from app import app, db, bcrypt
+from app import app, db
 from flask import render_template, redirect, url_for, flash, request, Blueprint
 from flask.ext.login import login_required, current_user
 from .forms import BlogForm
@@ -25,8 +25,8 @@ def article(article_id):
 @home_blueprint.route('/article/<article_id>/delete')
 @login_required
 def article_del(article_id):
-    if current_user.name == 'boer':
-        post = Blog.query.filter_by(id=article_id).first()
+    post = Blog.query.filter_by(id=article_id).first()
+    if current_user.name == post.author.name or current_user.name == 'boer':
         db.session.delete(post)
         db.session.commit()
         flash('Delete blog success!')

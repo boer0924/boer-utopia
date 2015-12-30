@@ -15,7 +15,7 @@
         <p class="uk-article-meta">
             <i class="uk-icon-user"></i> {{ post.author.name }}&nbsp;&nbsp;
             <i class="uk-icon-calendar"></i> {{ post.pub_date }}&nbsp;&nbsp;
-            {% if current_user.name == 'boer' %}
+            {% if current_user.name == post.author.name or current_user.name == 'boer' %}
             <a style="color: #999;" href="{{ url_for('home.article_del', article_id=post.id) }}" class="uk-animation-hover uk-animation-shake"><i class="uk-icon-trash"></i> Delete</a>
             {% endif %}
         </p>
@@ -46,13 +46,12 @@
 
 <div class="uk-width-3-10">
     <div class="uk-panel uk-panel-header">
-        <h3 class="uk-panel-title">Follow Me</h3>
+        <h3 class="uk-h4">Follow Me</h3>
         <p>
             <a href="http://weibo.com/boerutopia" class="uk-icon-button uk-icon-weibo"></a>
-            <a href="#" class="uk-icon-button uk-icon-github"></a>
-            <a href="#" class="uk-icon-button uk-icon-twitter"></a>
-            <a href="#" class="uk-icon-button uk-icon-dribbble"></a>
-            <a href="#" class="uk-icon-button uk-icon-html5"></a>
+            <a href="https://github.com/boer0924" class="uk-icon-button uk-icon-github"></a>
+            <a href="https://twitter.com/boerutopia" class="uk-icon-button uk-icon-twitter"></a>
+            <a href="http://user.qzone.qq.com/244857967" class="uk-icon-button uk-icon-qq"></a>
         </p>
     </div>
     <div class="uk-panel uk-panel-header">
