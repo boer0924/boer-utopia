@@ -19,8 +19,33 @@ def index(page=1):
 
 @home_blueprint.route('/article/<article_id>')
 def article(article_id):
-    posts = Blog.query.filter_by(id=article_id,).all()
-    return render_template('article.html', posts=posts)
+    post = Blog.query.filter_by(id=article_id,).first()
+    format_content = markdown(post.content, ['markdown.extensions.extra'])
+    return render_template('article.html', post=post, content=format_content)
+
+@home_blueprint.route('/article/<article_id>/edit', methods=['GET', 'POST'])
+def article_edit(article_id):
+    form = BlogForm()
+    post = Blog.query.filter_by(id=article_id,).first()
+    if form.validate_on_submit():
+        current_category = Category.query.filter_by(name=form.category.data).first()
+        post.title = form.title.data
+        post.content = form.content.data
+        post.author = current_user.id
+        post.category = current_category.id
+        db.session.add(post)
+        db.session.commit()
+        flash('Update blog sucessfully!')
+        return redirect(url_for(home.article, article_id=post.id))    
+    form.title.data = post.title
+    form.content.data = post.content
+    form.category.choices = [
+        ('python', 'Python'),
+        ('linux', 'Linux'),
+        ('devops', 'DevOps')
+    ]
+    # form.category.data = post.category.name
+    return render_template('publish.html', form=form)
 
 @home_blueprint.route('/article/<article_id>/delete')
 @login_required
@@ -52,16 +77,17 @@ def publish():
     if form.validate_on_submit():
         current_category = Category.query.filter_by(
             name=form.category.data).first()
-        format_content = markdown(request.form['content'],
-            ['markdown.extensions.extra'])
+        original_content = request.form['content']
+        # format_content = markdown(request.form['content'],
+        #     ['markdown.extensions.extra'])
         if current_category:
-            post = Blog(form.title.data, format_content,
+            post = Blog(form.title.data, original_content,
                 current_user.id, current_category.id)
         else:
             current_category = Category(form.category.data)
             db.session.add(current_category)
             db.session.commit()
-            post = Blog(form.title.data, format_content,
+            post = Blog(form.title.data, original_content,
                 current_user.id, current_category.id)
         db.session.add(post)
         db.session.commit()

@@ -9,7 +9,6 @@
 {% block content %}
 <div class="uk-width-7-10">
     <!-- start article list  -->
-    {% for post in posts %}
     <article class="uk-article">
         <h1 class="uk-article-title">{{ post.title }}</h1>
         <p class="uk-article-meta">
@@ -17,10 +16,11 @@
             <i class="uk-icon-calendar"></i> {{ post.pub_date }}&nbsp;&nbsp;
             {% if current_user.name == post.author.name or current_user.name == 'boer' %}
             <a style="color: #999;" href="{{ url_for('home.article_del', article_id=post.id) }}" class="uk-animation-hover uk-animation-shake"><i class="uk-icon-trash"></i> Delete</a>
+            <a href="{{ url_for('home.article_edit', article_id=post.id) }}">Edit</a>
             {% endif %}
         </p>
         <!-- <p class="uk-article-lead" ></p> -->
-        {{ post.content|safe }}
+        {{ content|safe }}
         <!-- <hr class="uk-article-divider"> -->
         <wb:share-button addition="simple" type="button" ralateUid="2770931324"></wb:share-button>
     </article>
@@ -40,7 +40,7 @@
         })();
     </script>
     <!-- 多说公共JS代码 end -->
-    {% endfor %}
+
     <!-- end article list  -->
 </div>
 
