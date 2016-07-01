@@ -35,7 +35,7 @@ def article_edit(article_id):
     if form.validate_on_submit():
         current_category = Category.query.filter_by(name=form.category.data).first()
         post.title = form.title.data
-        post.content = form.content.data
+        post.content = form.content
         post.author_id = current_user.id
         if current_category:
             post.category_id = current_category.id
