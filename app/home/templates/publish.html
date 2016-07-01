@@ -25,8 +25,8 @@
     <div class="uk-form-row">
         <label class="uk-form-label" for="">Content</label>
         <div class="uk-form-controls">
-            <!-- <textarea name="content" data-uk-htmleditor="{markdown:true, mode:'tab', maxsplitsize:600}"></textarea> -->
-            {{ form.content }}
+            <!-- <textarea name="content" data-uk-htmleditor="{markdown:true, mode:'tab', maxsplitsize:600}">{{ request.form['content'] }}</textarea> -->
+            {{ form.content(id="z-htmleditor") }}
         </div>
     </div>
     <div class="uk-form-row">
@@ -51,5 +51,8 @@
     </script>
     {% endfor %} -->
 </form>
+<script type="text/javascript">
+    var htmleditor = UIkit.htmleditor($('#z-htmleditor'), {markdown:true, mode:'tab', maxsplitsize:600});
+</script>
 <!-- end comment -->
 {% endblock %}

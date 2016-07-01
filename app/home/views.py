@@ -2,7 +2,7 @@ from app import app, db
 from flask import render_template, redirect, url_for, flash, request, Blueprint
 from flask.ext.login import login_required, current_user
 from .forms import BlogForm
-from app.models import Blog, Category
+from app.models import Blog, Category, User
 from markdown import markdown
 
 home_blueprint = Blueprint(
@@ -27,24 +27,29 @@ def article(article_id):
 def article_edit(article_id):
     form = BlogForm()
     post = Blog.query.filter_by(id=article_id,).first()
-    if form.validate_on_submit():
-        current_category = Category.query.filter_by(name=form.category.data).first()
-        post.title = form.title.data
-        post.content = form.content.data
-        post.author = current_user.id
-        post.category = current_category.id
-        db.session.add(post)
-        db.session.commit()
-        flash('Update blog sucessfully!')
-        return redirect(url_for(home.article, article_id=post.id))    
-    form.title.data = post.title
-    form.content.data = post.content
     form.category.choices = [
         ('python', 'Python'),
         ('linux', 'Linux'),
         ('devops', 'DevOps')
     ]
-    # form.category.data = post.category.name
+    if form.validate_on_submit():
+        current_category = Category.query.filter_by(name=form.category.data).first()
+        post.title = form.title.data
+        post.content = form.content.data
+        post.author_id = current_user.id
+        if current_category:
+            post.category_id = current_category.id
+        else:
+            current_category = Category(form.category.data)
+            db.session.add(current_category)
+            db.session.commit()
+            post.category_id = current_category.id
+        db.session.add(post)
+        db.session.commit()
+        flash('Update blog sucessfully!')
+        return redirect(url_for('home.article', article_id=post.id))    
+    form.title.data = post.title
+    form.content.data = post.content
     return render_template('publish.html', form=form)
 
 @home_blueprint.route('/article/<article_id>/delete')

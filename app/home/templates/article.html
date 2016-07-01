@@ -15,8 +15,8 @@
             <i class="uk-icon-user"></i> {{ post.author.name }}&nbsp;&nbsp;
             <i class="uk-icon-calendar"></i> {{ post.pub_date }}&nbsp;&nbsp;
             {% if current_user.name == post.author.name or current_user.name == 'boer' %}
-            <a style="color: #999;" href="{{ url_for('home.article_del', article_id=post.id) }}" class="uk-animation-hover uk-animation-shake"><i class="uk-icon-trash"></i> Delete</a>
-            <a href="{{ url_for('home.article_edit', article_id=post.id) }}">Edit</a>
+            <a style="color: #999;" href="{{ url_for('home.article_del', article_id=post.id) }}" class="uk-animation-hover uk-animation-shake z_delete"><i class="uk-icon-trash"> Delete</i></a>&nbsp;&nbsp;
+            <a style="color: #999;" href="{{ url_for('home.article_edit', article_id=post.id) }}" class="uk-animation-hover uk-animation-fade"><i class="uk-icon-edit"> Edit</i></a>&nbsp;&nbsp;
             {% endif %}
         </p>
         <!-- <p class="uk-article-lead" ></p> -->
@@ -38,6 +38,14 @@
             (document.getElementsByTagName('head')[0]
              || document.getElementsByTagName('body')[0]).appendChild(ds);
         })();
+        // Add by boer for delete artile prompt.
+        $('.z_delete').on('click', function() {
+            var _this =$(this);
+            UIkit.modal.confirm('Are you sure delete?', function() {
+                window.location.href=_this.attr('href');
+            });
+            return false;
+        });
     </script>
     <!-- 多说公共JS代码 end -->
 
