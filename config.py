@@ -25,6 +25,7 @@ class ProductionConfig(BaseConfig):
 ## system env
 # export APP_SETTINGS="config.DevelopmentConfig"
 # heroku config:set APP_SETTINGS="config.ProductionConfig"
+# heroku config:set APP_SETTINGS="config.DevelopmentConfig"
 # export DATABASE_URL="sqlite:///boer-utopia.db"
 # export DATABASE_URL="postgresql://localhost/boer-utopia"
 # heroku config:set DATABASE_URL=postgres://zhyardeyonnuqu:1lwEnSM_Zo7IH3s4WFH56d-hwm@ec2-23-21-96-129.compute-1.amazonaws.com:5432/d8q03lruh33ml0
