@@ -4,6 +4,7 @@ from flask.ext.login import login_required, current_user
 from .forms import BlogForm
 from app.models import Blog, Category, User
 from markdown import markdown
+from sqlalchemy import desc
 
 home_blueprint = Blueprint(
     'home', __name__,
@@ -13,8 +14,8 @@ home_blueprint = Blueprint(
 @home_blueprint.route('/')
 @home_blueprint.route('/index/<int:page>')
 def index(page=1):
-    posts = Blog.query.paginate(page, app.config['POSTS_PER_PAGE'], False)
-    hot_posts = Blog.query.order_by('pub_date desc').limit(app.config['HOT_POSTS_COUNT']).all()
+    posts = Blog.query.order_by(desc(Blog.pub_date)).paginate(page, app.config['POSTS_PER_PAGE'], False)
+    hot_posts = Blog.query.order_by(desc(Blog.pub_date)).limit(app.config['HOT_POSTS_COUNT']).all()
     return render_template('index.html', posts=posts, hot_posts=hot_posts)
 
 @home_blueprint.route('/article/<article_id>')
@@ -35,7 +36,7 @@ def article_edit(article_id):
     if form.validate_on_submit():
         current_category = Category.query.filter_by(name=form.category.data).first()
         post.title = form.title.data
-        post.content = form.content
+        post.content = form.content.data
         post.author_id = current_user.id
         if current_category:
             post.category_id = current_category.id
