@@ -5,6 +5,7 @@ from .forms import BlogForm
 from app.models import Blog, Category, User
 from markdown import markdown
 from sqlalchemy import desc
+from time import strftime
 
 home_blueprint = Blueprint(
     'home', __name__,
@@ -45,6 +46,7 @@ def article_edit(article_id):
             db.session.add(current_category)
             db.session.commit()
             post.category_id = current_category.id
+        post.pub_date = strftime('%Y-%m-%d %X')
         db.session.add(post)
         db.session.commit()
         flash('Update blog sucessfully!')
