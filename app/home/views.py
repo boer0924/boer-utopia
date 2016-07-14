@@ -5,7 +5,7 @@ from .forms import BlogForm
 from app.models import Blog, Category, User
 from markdown import markdown
 from sqlalchemy import desc
-from time import strftime
+from datetime import datetime
 
 home_blueprint = Blueprint(
     'home', __name__,
@@ -29,30 +29,20 @@ def article(article_id):
 def article_edit(article_id):
     form = BlogForm()
     post = Blog.query.filter_by(id=article_id,).first()
-    form.category.choices = [
-        ('python', 'Python'),
-        ('linux', 'Linux'),
-        ('devops', 'DevOps')
-    ]
+    form.category.choices = Category.get_all() 
     if form.validate_on_submit():
-        current_category = Category.query.filter_by(name=form.category.data).first()
         post.title = form.title.data
         post.content = form.content.data
         post.author_id = current_user.id
-        if current_category:
-            post.category_id = current_category.id
-        else:
-            current_category = Category(form.category.data)
-            db.session.add(current_category)
-            db.session.commit()
-            post.category_id = current_category.id
-        post.pub_date = strftime('%Y-%m-%d %X')
+        post.category_id = form.category.data
+        post.pub_date = datetime.now()
         db.session.add(post)
         db.session.commit()
         flash('Update blog sucessfully!')
-        return redirect(url_for('home.article', article_id=post.id))    
+        return redirect(url_for('home.article', article_id=post.id))   
     form.title.data = post.title
     form.content.data = post.content
+    form.category.data = post.category_id
     return render_template('publish.html', form=form)
 
 @home_blueprint.route('/article/<article_id>/delete')
@@ -77,26 +67,9 @@ def category(category_name):
 @home_blueprint.route('/publish', methods=['GET', 'POST'])
 def publish():
     form = BlogForm()
-    form.category.choices = [
-        ('python', 'Python'),
-        ('linux', 'Linux'),
-        ('devops', 'DevOps')
-    ]
+    form.category.choices = Category.get_all()
     if form.validate_on_submit():
-        current_category = Category.query.filter_by(
-            name=form.category.data).first()
-        original_content = request.form['content']
-        # format_content = markdown(request.form['content'],
-        #     ['markdown.extensions.extra'])
-        if current_category:
-            post = Blog(form.title.data, original_content,
-                current_user.id, current_category.id)
-        else:
-            current_category = Category(form.category.data)
-            db.session.add(current_category)
-            db.session.commit()
-            post = Blog(form.title.data, original_content,
-                current_user.id, current_category.id)
+        post = Blog(form.title.data, form.content.data, current_user.id, form.category.data)
         db.session.add(post)
         db.session.commit()
         flash('Publish blog success!')

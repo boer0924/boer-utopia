@@ -8,7 +8,7 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128))
     content = db.Column(db.Text)
-    pub_date = db.Column(db.String())
+    pub_date = db.Column(db.DateTime)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
 
@@ -18,9 +18,9 @@ class Blog(db.Model):
         self.author_id = author_id
         self.category_id = category_id
 
-        from time import strftime
+        from datetime import datetime
         if not pub_date:
-            self.pub_date = strftime('%Y-%m-%d %X')
+            self.pub_date = datetime.now()  #.strftime('%Y-%m-%d %X')
 
     def __repr__(self):
         return '<Post %r>' % self.title
@@ -66,6 +66,13 @@ class Category(db.Model):
 
     def __init__(self, name):
         self.name = name
+
+    @classmethod
+    def get_all(cls):
+        results = []
+        for c in cls.query.all():
+            results.append((str(c.id), c.name))
+        return results
 
     def __repr__(self):
         return '<Category %r>' % self.name

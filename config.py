@@ -5,6 +5,7 @@ class BaseConfig(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'Microblog-Dev'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 3
     HOT_POSTS_COUNT = 3
 

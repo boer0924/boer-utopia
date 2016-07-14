@@ -5,7 +5,8 @@
     <ul class="uk-list uk-list-striped">
         {% for post in posts.items %}
         <li>
-            <a href="{{ url_for('home.article', article_id=post.id) }}">{{ post.title }}</a>
+            <a style="margin-left: 10px;" href="{{ url_for('home.article', article_id=post.id) }}">{{ post.title }}</a>
+            <span style="float: right; margin-right: 20px;">{{ post.pub_date.strftime('%Y-%m-%d') }}</span>
         </li>
         {% endfor %}
     </ul>
