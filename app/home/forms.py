@@ -6,3 +6,6 @@ class BlogForm(Form):
     title = StringField('title', [DataRequired('Title is required')])
     content = TextAreaField('content', [DataRequired('Body is required')])
     category = SelectField('category')
+
+class SearchForm(Form):
+    keyword = StringField('keyword')

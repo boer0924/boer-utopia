@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash, request, Blueprint
 from flask.ext.login import login_required, current_user
-from .forms import BlogForm
+from .forms import BlogForm, SearchForm
 from app.models import Blog, Category, User
 from markdown import markdown
 from sqlalchemy import desc
@@ -15,9 +15,10 @@ home_blueprint = Blueprint(
 @home_blueprint.route('/')
 @home_blueprint.route('/index/<int:page>')
 def index(page=1):
+    form = SearchForm()
     posts = Blog.query.order_by(desc(Blog.pub_date)).paginate(page, app.config['POSTS_PER_PAGE'], False)
     hot_posts = Blog.query.order_by(desc(Blog.pub_date)).limit(app.config['HOT_POSTS_COUNT']).all()
-    return render_template('index.html', posts=posts, hot_posts=hot_posts)
+    return render_template('index.html', posts=posts, hot_posts=hot_posts, form=form)
 
 @home_blueprint.route('/article/<article_id>')
 def article(article_id):

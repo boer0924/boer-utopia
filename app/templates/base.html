@@ -27,6 +27,7 @@
                 </ul>
                 <div class="uk-navbar-flip">
                     <ul class="uk-navbar-nav uk-hidden-small">
+                        <li>{{ form.keyword() }}<input type="subit" name="Search"></li>
                         {% if current_user.is_authenticated %}
                         <li><a href="{{ url_for('users.profile', name=current_user.name) }}"><i class="uk-icon-user"></i>  {{ current_user.name }}</a></li>
                         <li><a href="{{ url_for('home.publish') }}"><i class="uk-icon-edit"></i> Publish</a></li>
