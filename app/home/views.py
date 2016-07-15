@@ -29,13 +29,14 @@ def article(article_id):
 def article_edit(article_id):
     form = BlogForm()
     post = Blog.query.filter_by(id=article_id,).first()
-    form.category.choices = Category.get_all() 
+    choices = Category.get_all()
+    form.category.choices = choices
     if form.validate_on_submit():
         post.title = form.title.data
         post.content = form.content.data
         post.author_id = current_user.id
         post.category_id = form.category.data
-        post.pub_date = datetime.now()
+        post.pub_date = datetime.utcnow()
         db.session.add(post)
         db.session.commit()
         flash('Update blog sucessfully!')
@@ -67,7 +68,8 @@ def category(category_name):
 @home_blueprint.route('/publish', methods=['GET', 'POST'])
 def publish():
     form = BlogForm()
-    form.category.choices = Category.get_all()
+    choices = Category.get_all()
+    form.category.choices = choices
     if form.validate_on_submit():
         post = Blog(form.title.data, form.content.data, current_user.id, form.category.data)
         db.session.add(post)

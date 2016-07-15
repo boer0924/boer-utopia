@@ -20,7 +20,7 @@ class Blog(db.Model):
 
         from datetime import datetime
         if not pub_date:
-            self.pub_date = datetime.now()  #.strftime('%Y-%m-%d %X')
+            self.pub_date = datetime.utcnow()  #.strftime('%Y-%m-%d %X')
 
     def __repr__(self):
         return '<Post %r>' % self.title
