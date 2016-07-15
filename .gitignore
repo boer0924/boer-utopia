@@ -2,4 +2,3 @@ venv
 migrations
 *.pyc
 *.db
-db_repository
