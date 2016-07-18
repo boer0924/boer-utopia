@@ -12,10 +12,19 @@ home_blueprint = Blueprint(
     template_folder='templates'
 )
 
-@home_blueprint.route('/')
-@home_blueprint.route('/index/<int:page>')
+@home_blueprint.route('/', methods=['GET', 'POST'])
+@home_blueprint.route('/index/<int:page>', methods=['GET', 'POST'])
 def index(page=1):
     form = SearchForm()
+    if form.validate_on_submit():
+        results = Blog.query.filter(Blog.content.like('%' + form.keyword.data + '%'))
+        if results.all():
+            posts = results.paginate(page, app.config['POSTS_PER_PAGE'], False)
+            hot_posts = Blog.query.order_by(desc(Blog.pub_date)).limit(app.config['HOT_POSTS_COUNT']).all()
+            return render_template('index.html', posts=posts, hot_posts=hot_posts, form=form)
+        else:
+            flash('Not found with [' + form.keyword.data + '] blog.')
+            return redirect(url_for('home.index'))
     posts = Blog.query.order_by(desc(Blog.pub_date)).paginate(page, app.config['POSTS_PER_PAGE'], False)
     hot_posts = Blog.query.order_by(desc(Blog.pub_date)).limit(app.config['HOT_POSTS_COUNT']).all()
     return render_template('index.html', posts=posts, hot_posts=hot_posts, form=form)

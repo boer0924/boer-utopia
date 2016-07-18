@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
+{% block nav %}
+<li>
+    <form class="uk-form uk-margin-remove uk-display-inline-block" method="post">
+        {{ form.csrf_token }}
+        {{ form.keyword(style="margin-top:5px;border-radius:8px;", placeholder="Search") }}
+    </form>
+</li>
+{% endblock %}
 {% block content %}
 <div class="uk-width-7-10">
+    {% if posts %}
     <!-- start article list  -->
     <ul class="uk-list uk-list-striped">
         {% for post in posts.items %}
@@ -11,6 +20,11 @@
         {% endfor %}
     </ul>
     <!-- end article list  -->
+    {% else %}
+    <script type="text/javascript">
+        alert('Not Found');
+    </script>
+    {% endif %}
     <!-- start paginate -->
     <ul class="uk-pagination">
         {% if posts.has_prev %}
