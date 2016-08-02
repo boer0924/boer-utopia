@@ -19,6 +19,7 @@ def index(page=1):
     if form.validate_on_submit():
         results = Blog.query.filter(Blog.content.like('%' + form.keyword.data + '%'))
         if results.all():
+            flash('Found with [' + form.keyword.data + '] blog.')
             posts = results.paginate(page, app.config['POSTS_PER_PAGE'], False)
             hot_posts = Blog.query.order_by(desc(Blog.pub_date)).limit(app.config['HOT_POSTS_COUNT']).all()
             return render_template('index.html', posts=posts, hot_posts=hot_posts, form=form)
